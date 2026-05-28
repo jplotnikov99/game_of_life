@@ -16,15 +16,6 @@ void Communicator::run() {
     QThread::msleep(delay); // Sleep for the specified delay
   }
 }
-/* void Communicator::run() {
-  while (true) {
-    if (isPlaying) {
-      nextState();
-      QThread::msleep(delay); // Sleep for the specified delay
-    } else
-      QThread::msleep(100); // Sleep briefly to prevent busy-waiting when paused
-  }
-} */
 
 void Communicator::togglePlayPause() {
   isPlaying = !isPlaying;

@@ -1,16 +1,21 @@
 #include "window.hpp"
 #include "communicator.hpp"
+#include <QStyle>
 #include <qobject.h>
 
 MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
     : QWidget(parent), gridWidget(new GridWidget(grid, 10, this)),
       communicator(communicator) {
 
+  loadStyles();
+
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   QHBoxLayout *buttonLayout = new QHBoxLayout();
 
   buttonLayout->addWidget(nextStateButton);
+  buttonLayout->addWidget(resetButton);
   buttonLayout->addWidget(playPauseButton);
+  buttonLayout->addWidget(speedSlider);
   mainLayout->addLayout(buttonLayout);
   mainLayout->addWidget(gridWidget);
   QObject::connect(communicator, &Communicator::updated, gridWidget,
@@ -19,8 +24,29 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
                    &MainWindow::nextState);
   QObject::connect(playPauseButton, &QPushButton::clicked, this,
                    &MainWindow::togglePlayPause);
+  QObject::connect(
+      speedSlider, &QSlider::valueChanged, this,
+      [communicator](int value) { communicator->delay = (510 - value); });
 };
 
 void MainWindow::nextState() { communicator->nextState(); }
 
-void MainWindow::togglePlayPause() {}
+void MainWindow::togglePlayPause() {
+  communicator->togglePlayPause();
+  if (communicator->isPlaying.load()) {
+    playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+  } else {
+    playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+  }
+}
+
+void MainWindow::loadStyles() {
+  // playPauseButton style
+  playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+
+  // speedSlider style
+  speedSlider->setRange(10, 500);
+  speedSlider->setValue(410);
+  speedSlider->setTickInterval(10);
+  speedSlider->setFixedWidth(250);
+}
