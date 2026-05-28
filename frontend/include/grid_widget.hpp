@@ -15,7 +15,10 @@ public:
 
 protected:
   void paintEvent(QPaintEvent *) override;
+  void mousePressEvent(QMouseEvent *event) override;
+  void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
+  void handleMouseEvent(QMouseEvent *event);
   int m_cellSize;
 };

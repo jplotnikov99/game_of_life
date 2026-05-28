@@ -1,10 +1,11 @@
 #pragma once
 
-#include "grid_widget.hpp"
 #include "communicator.hpp"
+#include "grid_widget.hpp"
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <qpushbutton.h>
 
 class MainWindow : public QWidget {
   Q_OBJECT
@@ -15,11 +16,11 @@ public:
   ~MainWindow() = default;
 
   void nextState();
+  void togglePlayPause();
 
 private:
-
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  QPushButton *button = new QPushButton("Next State");
+  QPushButton *nextStateButton = new QPushButton("Next State");
+  QPushButton *playPauseButton = new QPushButton("Play/Pause");
   GridWidget *gridWidget;
   Communicator *communicator = new Communicator(this);
 };

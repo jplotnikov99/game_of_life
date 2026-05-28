@@ -25,6 +25,11 @@ void Grid::setCellState(int x, int y, bool alive) {
   cells[x][y].alive = alive;
 }
 
+void Grid::toggleCellState(int x, int y) {
+  boundaryConditions(x, y);
+  cells[x][y].alive = !cells[x][y].alive;
+}
+
 BasicCell &Grid::getCell(int x, int y) {
   boundaryConditions(x, y);
   return cells[x][y];

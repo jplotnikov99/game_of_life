@@ -1,4 +1,5 @@
 #include "grid_widget.hpp"
+#include <QMouseEvent>
 #include <QPainter>
 
 GridWidget::GridWidget(Grid &grid, int cellSize, QWidget *parent)
@@ -16,5 +17,22 @@ void GridWidget::paintEvent(QPaintEvent *) {
                        m_grid.getCell(r, c).alive ? Qt::black : Qt::white);
       painter.drawRect(cell);
     }
+  }
+}
+
+void GridWidget::mousePressEvent(QMouseEvent *event) {
+  handleMouseEvent(event);
+}
+
+void GridWidget::mouseMoveEvent(QMouseEvent *event) { handleMouseEvent(event); }
+
+void GridWidget::handleMouseEvent(QMouseEvent *event) {
+  int col = event->position().x() / m_cellSize;
+  int row = event->position().y() / m_cellSize;
+
+  if (row >= 0 && row < m_grid.getrows() && col >= 0 &&
+      col < m_grid.getcols()) {
+    m_grid.setCellState(row, col, true);
+    update();
   }
 }

@@ -8,3 +8,7 @@ void Communicator::stateUpdate(Grid &grid) {
   updater.update(grid);
   emit updated();
 }
+
+void Communicator::togglePlayPause() {
+  // Implement play/pause logic here, e.g., using a timer to repeatedly call stateUpdate
+}

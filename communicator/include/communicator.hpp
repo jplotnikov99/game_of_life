@@ -9,6 +9,7 @@ public:
   ~Communicator() = default;
 
   void stateUpdate(Grid &grid);
+  void togglePlayPause();
 
 signals:
   void updated();

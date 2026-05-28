@@ -23,6 +23,8 @@ public:
 
   void setCellState(int x, int y, bool alive);
 
+  void toggleCellState(int x, int y);
+
   BasicCell &getCell(int x, int y);
 
   int getrows() const { return rows; }
