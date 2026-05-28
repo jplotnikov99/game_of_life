@@ -13,6 +13,8 @@ public:
   explicit GridWidget(Grid &grid, int cellSize = 20, QWidget *parent = nullptr);
   ~GridWidget() = default;
 
+  void resetGrid();
+
 protected:
   void paintEvent(QPaintEvent *) override;
   void mousePressEvent(QMouseEvent *event) override;

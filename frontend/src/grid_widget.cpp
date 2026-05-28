@@ -36,3 +36,12 @@ void GridWidget::handleMouseEvent(QMouseEvent *event) {
     update();
   }
 }
+
+void GridWidget::resetGrid() {
+  for (int r = 0; r < m_grid.getrows(); r++) {
+    for (int c = 0; c < m_grid.getcols(); c++) {
+      m_grid.setCellState(r, c, false);
+    }
+  }
+  update();
+}

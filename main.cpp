@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
-  Grid grid(100, 100);
+  Grid grid(200, 200);
   Communicator *communicator = new Communicator(grid);
 
   QThread *thread = new QThread();
