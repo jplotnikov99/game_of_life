@@ -9,5 +9,10 @@ add_library(frontend
     ${MOC_FILES}
 )
 
-target_include_directories(frontend PUBLIC ${frontend_include_dir} ${backend_include_dir})
-target_link_libraries(frontend PRIVATE Qt6::Widgets backend)
+target_include_directories(frontend PUBLIC 
+    ${frontend_include_dir} 
+    ${backend_include_dir} 
+    ${communicator_include_dir}
+)
+
+target_link_libraries(frontend PRIVATE Qt6::Widgets backend communicator)

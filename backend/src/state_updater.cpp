@@ -26,7 +26,6 @@ void StateUpdater::update(Grid &grid) {
       }
     }
   }
-  emit nextState();
 }
 
 void StateUpdater::steps(Grid &grid, int numSteps) {

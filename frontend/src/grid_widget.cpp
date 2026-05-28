@@ -2,10 +2,8 @@
 #include <QPainter>
 
 GridWidget::GridWidget(Grid &grid, int cellSize, QWidget *parent)
-    : QWidget(parent), m_grid(grid), m_cellSize(cellSize), m_stateUpdater(100) {
+    : QWidget(parent), m_grid(grid), m_cellSize(cellSize) {
   setFixedSize(m_grid.getrows() * cellSize, m_grid.getcols() * cellSize);
-  QObject::connect(&m_stateUpdater, &StateUpdater::nextState, this,
-                   qOverload<>(&GridWidget::update));
 }
 
 void GridWidget::paintEvent(QPaintEvent *) {

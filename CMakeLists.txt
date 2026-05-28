@@ -14,10 +14,12 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
 set(backend_include_dir ${CMAKE_CURRENT_SOURCE_DIR}/backend/include)
 set(frontend_include_dir ${CMAKE_CURRENT_SOURCE_DIR}/frontend/include)
+set(communicator_include_dir ${CMAKE_CURRENT_SOURCE_DIR}/communicator/include)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/backend/src)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/frontend/src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/communicator/src)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE backend frontend Qt6::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE backend frontend communicator Qt6::Widgets)

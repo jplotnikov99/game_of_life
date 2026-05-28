@@ -1,11 +1,9 @@
 #pragma once
 
 #include "grid.hpp"
-#include <QObject>
-#include <qtmetamacros.h>
 
-class StateUpdater : public QObject {
-  Q_OBJECT
+class StateUpdater {
+
 private:
   const int delay = 200; // Delay in milliseconds between steps
 
@@ -18,7 +16,4 @@ public:
 
   void update(Grid &grid);
 
-signals:
-
-  void nextState();
 };

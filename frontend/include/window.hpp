@@ -1,6 +1,7 @@
 #pragma once
 
 #include "grid_widget.hpp"
+#include "communicator.hpp"
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -13,8 +14,12 @@ public:
 
   ~MainWindow() = default;
 
+  void nextState();
+
 private:
+
   QVBoxLayout *layout = new QVBoxLayout(this);
   QPushButton *button = new QPushButton("Next State");
-  GridWidget *widget;
+  GridWidget *gridWidget;
+  Communicator *communicator = new Communicator(this);
 };
