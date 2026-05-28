@@ -31,7 +31,7 @@ void StateUpdater::update(Grid &grid) {
 void StateUpdater::steps(Grid &grid, int numSteps) {
   std::cout << "\033[2J\033[H"; // Clear screen and move cursor to top-left
   grid.printState();
-  while (isplaying) {
+  for (int i = 0; i < numSteps; ++i) {
     std::this_thread::sleep_for(
         std::chrono::milliseconds(delay)); // Sleep for 200ms between steps
     std::cout << "\033[2J\033[H"; // Clear screen and move cursor to top-left

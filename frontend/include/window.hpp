@@ -11,7 +11,7 @@ class MainWindow : public QWidget {
   Q_OBJECT
 
 public:
-  explicit MainWindow(Grid &grid, QWidget *parent = nullptr);
+  explicit MainWindow(Grid &grid, Communicator *communicator, QWidget *parent = nullptr);
 
   ~MainWindow() = default;
 
@@ -22,5 +22,5 @@ private:
   QPushButton *nextStateButton = new QPushButton("Next State");
   QPushButton *playPauseButton = new QPushButton("Play/Pause");
   GridWidget *gridWidget;
-  Communicator *communicator = new Communicator(this);
+  Communicator *communicator;
 };

@@ -2,8 +2,9 @@
 #include "communicator.hpp"
 #include <qobject.h>
 
-MainWindow::MainWindow(Grid &grid, QWidget *parent)
-    : QWidget(parent), gridWidget(new GridWidget(grid, 10, this)) {
+MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
+    : QWidget(parent), gridWidget(new GridWidget(grid, 10, this)),
+      communicator(communicator) {
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   QHBoxLayout *buttonLayout = new QHBoxLayout();
@@ -20,8 +21,6 @@ MainWindow::MainWindow(Grid &grid, QWidget *parent)
                    &MainWindow::togglePlayPause);
 };
 
-void MainWindow::nextState() { communicator->stateUpdate(gridWidget->m_grid); }
+void MainWindow::nextState() { communicator->nextState(); }
 
-void MainWindow::togglePlayPause() {
-    
-}
+void MainWindow::togglePlayPause() {}

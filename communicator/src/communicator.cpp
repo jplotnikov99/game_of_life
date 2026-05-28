@@ -1,14 +1,38 @@
 #include "communicator.hpp"
 #include "state_updater.hpp"
+#include <QThread>
+#include <qobject.h>
 
-Communicator::Communicator(QObject *parent) : QObject(parent) {}
+Communicator::Communicator(Grid &grid, QObject *parent)
+    : QObject(parent), grid(grid) {}
 
-void Communicator::stateUpdate(Grid &grid) {
+void Communicator::run() {
+  while (true) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_cv.wait(lock,
+              [this] { return isPlaying.load(); }); // sleeps until playing
+    nextState();
+    lock.unlock();
+    QThread::msleep(delay); // Sleep for the specified delay
+  }
+}
+/* void Communicator::run() {
+  while (true) {
+    if (isPlaying) {
+      nextState();
+      QThread::msleep(delay); // Sleep for the specified delay
+    } else
+      QThread::msleep(100); // Sleep briefly to prevent busy-waiting when paused
+  }
+} */
+
+void Communicator::togglePlayPause() {
+  isPlaying = !isPlaying;
+  m_cv.notify_one();
+}
+
+void Communicator::nextState() {
   StateUpdater updater(1);
   updater.update(grid);
   emit updated();
-}
-
-void Communicator::togglePlayPause() {
-  // Implement play/pause logic here, e.g., using a timer to repeatedly call stateUpdate
 }
