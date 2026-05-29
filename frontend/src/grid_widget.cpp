@@ -18,12 +18,14 @@ void GridWidget::resetGrid() {
 }
 
 QColor GridWidget::cellTypeToColor(BasicCell &cell) const {
-  if (cell.getType() == "Basic") {
+  switch (cell.getType()) {
+  case CellType::BASIC:
     return Qt::black;
-  } else if (cell.getType() == "Hunger") {
+  case CellType::HUNGER:
     return Qt::red;
+  default:
+    return Qt::gray; // Default color for unknown types
   }
-  return Qt::gray; // Default color for unknown types
 }
 
 void GridWidget::paintEvent(QPaintEvent *) {

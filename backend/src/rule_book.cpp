@@ -1,9 +1,6 @@
-#include "state_updater.hpp"
-#include <chrono>
-#include <iostream>
-#include <thread>
+#include "rule_book.hpp"
 
-void StateUpdater::update(Grid &grid) {
+void RuleBook::applyRules(Grid &grid) {
   Grid newGrid(grid.getrows(), grid.getcols()); // Create a copy of the current grid
   newGrid.copyState(grid);
   for (int x = 0; x < grid.getrows(); ++x) {
@@ -26,17 +23,5 @@ void StateUpdater::update(Grid &grid) {
         grid.setCellState(x, y, aliveNeighbors == 3);
       }
     }
-  }
-}
-
-void StateUpdater::steps(Grid &grid, int numSteps) {
-  std::cout << "\033[2J\033[H"; // Clear screen and move cursor to top-left
-  grid.printState();
-  for (int i = 0; i < numSteps; ++i) {
-    std::this_thread::sleep_for(
-        std::chrono::milliseconds(delay)); // Sleep for 200ms between steps
-    std::cout << "\033[2J\033[H"; // Clear screen and move cursor to top-left
-    update(grid);
-    // grid.printState();
   }
 }

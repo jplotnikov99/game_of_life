@@ -1,5 +1,5 @@
 #include "communicator.hpp"
-#include "state_updater.hpp"
+#include "rule_book.hpp"
 #include <QThread>
 #include <qobject.h>
 
@@ -23,7 +23,7 @@ void Communicator::togglePlayPause() {
 }
 
 void Communicator::nextState() {
-  StateUpdater updater(1);
-  updater.update(grid);
+  RuleBook rulebook(1);
+  rulebook.applyRules(grid);
   emit updated();
 }

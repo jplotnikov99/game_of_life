@@ -1,12 +1,12 @@
 #include <memory>
-#include <string>
 
+enum CellType { BASIC, HUNGER };
 
 class BasicCell {
 public:
   bool alive = false;
 
-  virtual std::string getType() const { return "Basic"; }
+  virtual CellType getType() const { return CellType::BASIC; }
 
   virtual std::unique_ptr<BasicCell> clone() const {
     return std::make_unique<BasicCell>(*this);
@@ -19,7 +19,7 @@ class HungerCell : public BasicCell {
 public:
   int hunger = 1;
 
-  std::string getType() const override { return "Hunger"; }
+  CellType getType() const override { return CellType::HUNGER; }
 
   std::unique_ptr<BasicCell> clone() const override {
     return std::make_unique<HungerCell>(*this);
