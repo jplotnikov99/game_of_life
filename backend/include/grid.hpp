@@ -30,9 +30,7 @@ public:
 
   void boundaryConditions(int &x, int &y);
 
-  void setCellState(int x, int y, bool alive);
-
-  void toggleCellState(int x, int y);
+  void setCell(int x, int y, std::unique_ptr<BasicCell> newCell);
 
   BasicCell &getCell(int x, int y);
 

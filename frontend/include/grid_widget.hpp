@@ -16,6 +16,8 @@ public:
 
   void resetGrid();
   QColor cellTypeToColor(BasicCell &cell) const;
+  void updateCellType(CellType type) { currentCellType = type; }
+  void setCellTypeAt(int row, int col);
 
 protected:
   void paintEvent(QPaintEvent *) override;
@@ -24,5 +26,6 @@ protected:
 
 private:
   void handleMouseEvent(QMouseEvent *event);
+  CellType currentCellType = CellType::BASIC;
   int m_cellSize;
 };

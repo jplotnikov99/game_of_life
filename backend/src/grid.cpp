@@ -28,14 +28,9 @@ void Grid::boundaryConditions(int &x, int &y) {
   y = y % cols;
 }
 
-void Grid::setCellState(int x, int y, bool alive) {
+void Grid::setCell(int x, int y, std::unique_ptr<BasicCell> newCell) {
   boundaryConditions(x, y);
-  cells[x][y]->alive = alive;
-}
-
-void Grid::toggleCellState(int x, int y) {
-  boundaryConditions(x, y);
-  cells[x][y]->alive = !cells[x][y]->alive;
+  cells[x][y] = std::move(newCell);
 }
 
 BasicCell &Grid::getCell(int x, int y) {

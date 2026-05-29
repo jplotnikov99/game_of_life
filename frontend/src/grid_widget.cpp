@@ -2,6 +2,7 @@
 #include "grid.hpp"
 #include <QMouseEvent>
 #include <QPainter>
+#include <memory>
 
 GridWidget::GridWidget(Grid &grid, int cellSize, QWidget *parent)
     : QWidget(parent), m_grid(grid), m_cellSize(cellSize) {
@@ -11,7 +12,7 @@ GridWidget::GridWidget(Grid &grid, int cellSize, QWidget *parent)
 void GridWidget::resetGrid() {
   for (int r = 0; r < m_grid.getrows(); r++) {
     for (int c = 0; c < m_grid.getcols(); c++) {
-      m_grid.setCellState(r, c, false);
+      m_grid.setCell(r, c, std::make_unique<BasicCell>(false));
     }
   }
   update();
@@ -52,7 +53,18 @@ void GridWidget::handleMouseEvent(QMouseEvent *event) {
 
   if (row >= 0 && row < m_grid.getrows() && col >= 0 &&
       col < m_grid.getcols()) {
-    m_grid.setCellState(row, col, true);
+    setCellTypeAt(row, col);
     update();
+  }
+}
+
+void GridWidget::setCellTypeAt(int row, int col) {
+  switch (currentCellType) {
+  case CellType::BASIC:
+    m_grid.setCell(row, col, std::make_unique<BasicCell>(true));
+    break;
+  case CellType::HUNGER:
+    m_grid.setCell(row, col, std::make_unique<HungerCell>(true));
+    break;
   }
 }

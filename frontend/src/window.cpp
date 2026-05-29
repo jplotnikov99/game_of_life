@@ -1,5 +1,6 @@
 #include "window.hpp"
 #include "communicator.hpp"
+#include <QLabel>
 #include <QStyle>
 #include <qobject.h>
 
@@ -10,14 +11,26 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
   loadStyles();
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  QHBoxLayout *buttonLayout = new QHBoxLayout();
 
-  buttonLayout->addWidget(nextStateButton);
-  buttonLayout->addWidget(resetButton);
-  buttonLayout->addWidget(playPauseButton);
-  buttonLayout->addWidget(speedSlider);
-  mainLayout->addLayout(buttonLayout);
-  mainLayout->addWidget(gridWidget);
+  QHBoxLayout *firstLayer = new QHBoxLayout();
+  firstLayer->addWidget(nextStateButton);
+  firstLayer->addWidget(resetButton);
+  firstLayer->addWidget(playPauseButton);
+
+  QHBoxLayout *secondLayer = new QHBoxLayout();
+  secondLayer->addWidget(speedSlider);
+
+  QHBoxLayout *thirdLayer = new QHBoxLayout();
+  QVBoxLayout *cellTypeLegend = new QVBoxLayout();
+  cellTypeLegend->addWidget(basicLabel);
+  cellTypeLegend->addWidget(hungerLabel);
+  thirdLayer->addWidget(gridWidget);
+  thirdLayer->addLayout(cellTypeLegend);
+
+  mainLayout->addLayout(firstLayer);
+  mainLayout->addLayout(secondLayer);
+  mainLayout->addLayout(thirdLayer);
+
   QObject::connect(communicator, &Communicator::updated, gridWidget,
                    qOverload<>(&GridWidget::update));
   QObject::connect(nextStateButton, &QPushButton::clicked, this,
@@ -29,6 +42,10 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
   QObject::connect(
       speedSlider, &QSlider::valueChanged, this,
       [communicator](int value) { communicator->delay = (510 - value); });
+  QObject::connect(basicLabel, &QPushButton::clicked, gridWidget,
+                   [this]() { gridWidget->updateCellType(CellType::BASIC); });
+  QObject::connect(hungerLabel, &QPushButton::clicked, gridWidget,
+                   [this]() { gridWidget->updateCellType(CellType::HUNGER); });
 };
 
 void MainWindow::nextState() { communicator->nextState(); }
@@ -51,4 +68,9 @@ void MainWindow::loadStyles() {
   speedSlider->setValue(410);
   speedSlider->setTickInterval(10);
   speedSlider->setFixedWidth(250);
+
+  // cell type labels
+  basicLabel->setStyleSheet("background-color: black; color: white;");
+
+  hungerLabel->setStyleSheet("background-color: red; color: white;");
 }
