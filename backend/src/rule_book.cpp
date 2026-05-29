@@ -1,6 +1,6 @@
 #include "rule_book.hpp"
-#include "utils.hpp"
 #include "grid.hpp"
+#include "utils.hpp"
 
 void RuleBook::applyRules(Grid &grid) {
 
@@ -31,14 +31,11 @@ void RuleBook::basicRule(BasicCell &currentCell,
   int aliveNeighbors = countNeighbors();
   CellType dominantType = getDominantCellType();
 
-  nextCell =
-      createCell(dominantType); // Create next cell based on dominant type
-
-  if (currentCell.alive) {
+  if (currentCell.alive)
     nextCell->alive = (aliveNeighbors == 2 || aliveNeighbors == 3);
-  } else {
-    nextCell->alive = (aliveNeighbors == 3);
-  }
+  else if (aliveNeighbors == 3)
+    nextCell = createCell(dominantType,
+                          true); // Create next cell based on dominant type
 }
 
 void RuleBook::hungerRule(HungerCell &currentCell,
@@ -46,17 +43,22 @@ void RuleBook::hungerRule(HungerCell &currentCell,
   int aliveNeighbors = countNeighbors();
   CellType dominantType = getDominantCellType();
 
-  nextCell =
-      createCell(dominantType); // Create next cell based on dominant type
-
   if (currentCell.alive) {
-    nextCell->alive = ((aliveNeighbors == 2 || aliveNeighbors == 3) &&
-                       currentCell.hunger < 3);
+    if (aliveNeighbors == 1 && cellCount[0] == 1) {
+      if (auto *hunger = dynamic_cast<HungerCell *>(nextCell.get())) {
+        hunger->hunger = 0;
+      }
+    } else {
+      nextCell->alive = ((aliveNeighbors == 2 || aliveNeighbors == 3) &&
+                         currentCell.hunger < currentCell.hungerThreshold);
+    }
     if (auto *hunger = dynamic_cast<HungerCell *>(nextCell.get())) {
       hunger->hunger = currentCell.hunger + 1;
     }
-  } else {
-    nextCell->alive = (aliveNeighbors == 3);
+
+  } else if (aliveNeighbors == 3) {
+    nextCell = createCell(dominantType,
+                          true); // Create next cell based on dominant type
     if (auto *hunger = dynamic_cast<HungerCell *>(nextCell.get())) {
       hunger->hunger = 0;
     }
@@ -86,7 +88,7 @@ CellType RuleBook::getDominantCellType() const {
   } else if (cellCount[1] > cellCount[0]) {
     return CellType::HUNGER;
   } else {
-    if(rollD2() == 0) {
+    if (rollD2() == 0) {
       return CellType::BASIC;
     } else {
       return CellType::HUNGER;

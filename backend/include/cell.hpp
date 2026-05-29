@@ -23,6 +23,7 @@ public:
 class HungerCell : public BasicCell {
 public:
   int hunger = 0;
+  const int hungerThreshold = 10;
 
   HungerCell() = default;
 
