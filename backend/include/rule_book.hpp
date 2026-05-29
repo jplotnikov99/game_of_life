@@ -14,4 +14,9 @@ public:
 
   void applyRules(Grid &grid);
 
+  void basicRule(BasicCell &currentCell, BasicCell &nextCell,
+                 int aliveNeighbors);
+
+  void hungerRule(HungerCell &currentCell, HungerCell &nextCell,
+                  int aliveNeighbors);
 };

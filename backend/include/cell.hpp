@@ -17,7 +17,7 @@ public:
 
 class HungerCell : public BasicCell {
 public:
-  int hunger = 1;
+  int hunger = 0;
 
   CellType getType() const override { return CellType::HUNGER; }
 
