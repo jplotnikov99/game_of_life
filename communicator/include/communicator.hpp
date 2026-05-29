@@ -16,6 +16,7 @@ public slots:
   void nextState();
   void togglePlayPause();
   void run();
+  void randomizeGrid();
 
 private:
   Grid &grid;

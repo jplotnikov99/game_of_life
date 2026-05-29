@@ -88,7 +88,7 @@ CellType RuleBook::getDominantCellType() const {
   } else if (cellCount[1] > cellCount[0]) {
     return CellType::HUNGER;
   } else {
-    if (rollD2() == 0) {
+    if (rollDN(2) == 0) {
       return CellType::BASIC;
     } else {
       return CellType::HUNGER;

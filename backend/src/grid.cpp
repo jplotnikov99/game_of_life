@@ -1,5 +1,15 @@
 #include "grid.hpp"
+#include "utils.hpp"
 #include <iostream>
+
+Grid::Grid(int rows, int cols) : rows(rows), cols(cols) {
+  cells.resize(rows);
+  for (auto &row : cells) {
+    row.resize(cols);
+    for (auto &cell : row)
+      cell = std::make_unique<BasicCell>(false); // Initialize all cells as dead
+  }
+}
 
 void Grid::printState() {
   std::cout << "--------------------" << std::endl;
@@ -41,4 +51,20 @@ BasicCell &Grid::getCell(int x, int y) {
 std::unique_ptr<BasicCell> &Grid::getCellPtr(int x, int y) {
   boundaryConditions(x, y);
   return cells[x][y];
+}
+
+void Grid::randomize() {
+  for (int i = 0; i < rows; ++i) {
+    for (int j = 0; j < cols; ++j) {
+      int cell = rollDN(5); // Randomly get 0 or 1
+      switch (cell) {
+      case 0:
+        cells[i][j] = std::make_unique<BasicCell>(true); // Alive
+        break;
+      case 1:
+        cells[i][j] = std::make_unique<HungerCell>(true); // Alive
+        break;
+      }
+    }
+  }
 }

@@ -12,16 +12,7 @@ private:
   std::vector<std::vector<std::unique_ptr<BasicCell>>> cells;
 
 public:
-  Grid(int rows, int cols) : rows(rows), cols(cols) {
-    cells.resize(rows);
-    for (auto &row : cells) {
-      row.resize(cols);
-      for (auto &cell : row) {
-        cell = std::make_unique<HungerCell>();
-      }
-    }
-  }
-
+  Grid(int rows, int cols); 
   ~Grid() {};
 
   void printState();
@@ -35,6 +26,8 @@ public:
   BasicCell &getCell(int x, int y);
 
   std::unique_ptr<BasicCell> &getCellPtr(int x, int y);
+
+  void randomize();
 
   int getrows() const { return rows; }
 

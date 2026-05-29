@@ -27,3 +27,8 @@ void Communicator::nextState() {
   rulebook.applyRules(grid);
   emit updated();
 }
+
+void Communicator::randomizeGrid() {
+  grid.randomize();
+  emit updated();
+}

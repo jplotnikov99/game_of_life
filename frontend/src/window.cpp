@@ -8,6 +8,7 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
     : QWidget(parent), gridWidget(new GridWidget(grid, 5, this)),
       communicator(communicator) {
 
+  loadNames();
   loadStyles();
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -15,6 +16,7 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
   QHBoxLayout *firstLayer = new QHBoxLayout();
   firstLayer->addWidget(nextStateButton);
   firstLayer->addWidget(resetButton);
+  firstLayer->addWidget(randomizeButton);
   firstLayer->addWidget(playPauseButton);
 
   QHBoxLayout *secondLayer = new QHBoxLayout();
@@ -37,6 +39,8 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
                    &MainWindow::nextState);
   QObject::connect(resetButton, &QPushButton::clicked, gridWidget,
                    &GridWidget::resetGrid);
+  QObject::connect(randomizeButton, &QPushButton::clicked, this,
+                   &MainWindow::randomizeGrid);
   QObject::connect(playPauseButton, &QPushButton::clicked, this,
                    &MainWindow::togglePlayPause);
   QObject::connect(
@@ -50,6 +54,8 @@ MainWindow::MainWindow(Grid &grid, Communicator *communicator, QWidget *parent)
 
 void MainWindow::nextState() { communicator->nextState(); }
 
+void MainWindow::randomizeGrid() { communicator->randomizeGrid(); }
+
 void MainWindow::togglePlayPause() {
   communicator->togglePlayPause();
   if (communicator->isPlaying.load()) {
@@ -57,6 +63,16 @@ void MainWindow::togglePlayPause() {
   } else {
     playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
   }
+}
+
+void MainWindow::loadNames() {
+  nextStateButton = new QPushButton("Next State");
+  resetButton = new QPushButton("Reset");
+  randomizeButton = new QPushButton("Randomize");
+  playPauseButton = new QPushButton();
+  speedSlider = new QSlider(Qt::Horizontal);
+  basicLabel = new QPushButton("Basic Cell");
+  hungerLabel = new QPushButton("Hunger Cell");
 }
 
 void MainWindow::loadStyles() {

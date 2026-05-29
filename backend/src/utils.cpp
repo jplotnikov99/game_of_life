@@ -1,4 +1,4 @@
 #include "utils.hpp"
 #include <cstdlib>
 
-int rollD2() { return rand() % 2; }
+int rollDN(int n) { return rand() % n; }

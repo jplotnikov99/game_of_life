@@ -1,3 +1,3 @@
 #pragma once
 
-int rollD2();
+int rollDN(int n);

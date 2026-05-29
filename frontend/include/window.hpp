@@ -19,15 +19,18 @@ public:
 
   void nextState();
   void togglePlayPause();
+  void randomizeGrid();
   void loadStyles();
+  void loadNames();
 
 private:
-  QPushButton *nextStateButton = new QPushButton("Next State");
-  QPushButton *resetButton = new QPushButton("Reset");
-  QPushButton *playPauseButton = new QPushButton();
-  QSlider *speedSlider = new QSlider(Qt::Horizontal);
-  QPushButton *basicLabel = new QPushButton("Basic Cell");
-  QPushButton *hungerLabel = new QPushButton("Hunger Cell");
+  QPushButton *nextStateButton;
+  QPushButton *resetButton;
+  QPushButton *randomizeButton;
+  QPushButton *playPauseButton;
+  QSlider *speedSlider;
+  QPushButton *basicLabel;
+  QPushButton *hungerLabel;
   GridWidget *gridWidget;
   Communicator *communicator;
 };
