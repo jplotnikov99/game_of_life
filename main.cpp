@@ -5,11 +5,15 @@
 #include <QPushButton>
 #include <QThread>
 #include <QVBoxLayout>
+#include <iostream>
 #include <qthread.h>
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
   Grid grid(200, 200);
+
+  std::cout << grid.getCell(0, 0).getType()
+            << std::endl; // Debugging output to check cell type
   Communicator *communicator = new Communicator(grid);
 
   QThread *thread = new QThread();

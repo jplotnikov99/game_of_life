@@ -3,6 +3,7 @@
 #include "grid.hpp"
 #include <QObject>
 #include <QWidget>
+#include <qcolor.h>
 
 class GridWidget : public QWidget {
   Q_OBJECT
@@ -14,6 +15,7 @@ public:
   ~GridWidget() = default;
 
   void resetGrid();
+  QColor cellTypeToColor(BasicCell &cell) const;
 
 protected:
   void paintEvent(QPaintEvent *) override;

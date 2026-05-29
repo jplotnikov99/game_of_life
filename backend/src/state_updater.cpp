@@ -4,7 +4,8 @@
 #include <thread>
 
 void StateUpdater::update(Grid &grid) {
-  Grid newGrid = grid; // Create a copy of the current grid
+  Grid newGrid(grid.getrows(), grid.getcols()); // Create a copy of the current grid
+  newGrid.copyState(grid);
   for (int x = 0; x < grid.getrows(); ++x) {
     for (int y = 0; y < grid.getcols(); ++y) {
       int aliveNeighbors = 0;
