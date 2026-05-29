@@ -23,7 +23,7 @@ void Communicator::togglePlayPause() {
 }
 
 void Communicator::nextState() {
-  RuleBook rulebook(1);
+  RuleBook rulebook(grid);
   rulebook.applyRules(grid);
   emit updated();
 }

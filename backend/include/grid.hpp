@@ -34,6 +34,8 @@ public:
 
   BasicCell &getCell(int x, int y);
 
+  std::unique_ptr<BasicCell> &getCellPtr(int x, int y);
+
   int getrows() const { return rows; }
 
   int getcols() const { return cols; }

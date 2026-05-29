@@ -1,6 +1,7 @@
 #include <memory>
 
-enum CellType { BASIC, HUNGER };
+enum CellType { BASIC = 0, HUNGER = 1 };
+
 
 class BasicCell {
 public:
@@ -35,3 +36,5 @@ public:
 
   ~HungerCell() = default;
 };
+
+std::unique_ptr<BasicCell> createCell(CellType type, bool alive = true); 

@@ -37,3 +37,8 @@ BasicCell &Grid::getCell(int x, int y) {
   boundaryConditions(x, y);
   return *cells[x][y];
 }
+
+std::unique_ptr<BasicCell> &Grid::getCellPtr(int x, int y) {
+  boundaryConditions(x, y);
+  return cells[x][y];
+}
