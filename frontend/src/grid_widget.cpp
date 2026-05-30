@@ -69,7 +69,7 @@ void GridWidget::setCellTypeAt(int row, int col) {
     m_grid.setCell(row, col, std::make_unique<HungerCell>(true));
     break;
   case CellType::VEGITATION:
-    m_grid.setCell(row, col, std::make_unique<VegitationCell>(true));
+    m_grid.setCell(row, col, std::make_unique<VegitationCell>(true, 0));
     break;
   }
 }

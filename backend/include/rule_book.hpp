@@ -12,7 +12,8 @@ private:
   int aliveNeighbors;    // Count of alive neighbors
   CellType dominantType; // Dominant cell type among neighbors
   std::vector<std::unique_ptr<BasicCell> *> neighbors; // Neighboring cells
-  std::vector<int> neighborCount = {0, 0}; // Index 0 for BASIC, 1 for HUNGER
+  std::vector<int> neighborCount = {
+      0, 0, 0}; // Index 0 for BASIC, 1 for HUNGER, 2 for VEGITATION
 
 public:
   RuleBook(const Grid &grid)
@@ -27,6 +28,12 @@ public:
 
   void hungerRule(std::unique_ptr<BasicCell> &currentCell,
                   std::unique_ptr<BasicCell> &nextCell);
+
+  void vegitationRule(std::unique_ptr<BasicCell> &currentCell,
+                      std::unique_ptr<BasicCell> &nextCell);
+
+  std::unique_ptr<BasicCell>
+  deadCellRule(std::unique_ptr<BasicCell> &currentCell);
 
   void loadNeighbors();
 

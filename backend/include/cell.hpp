@@ -5,7 +5,7 @@ enum CellType { BASIC = 0, HUNGER = 1, VEGITATION = 2 };
 class BasicCell {
 public:
   bool alive = false;
-  bool killed = false;
+  bool eaten = false;
 
   BasicCell() = default;
   BasicCell(const bool alive) : alive(alive) {}
@@ -38,8 +38,12 @@ public:
 
 class VegitationCell : public BasicCell {
 public:
+  int growth = 0;
+  const int growthThreshold = 3;
+
   VegitationCell() = default;
-  VegitationCell(const bool alive) : BasicCell(alive) {}
+  VegitationCell(const bool alive, const int growth)
+      : BasicCell(alive), growth(growth) {}
 
   CellType getType() const override { return CellType::VEGITATION; }
 
