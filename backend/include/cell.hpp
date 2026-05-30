@@ -6,6 +6,7 @@ enum CellType { BASIC = 0, HUNGER = 1 };
 class BasicCell {
 public:
   bool alive = false;
+  bool killed = false;
 
   BasicCell() = default;
 
@@ -23,7 +24,7 @@ public:
 class HungerCell : public BasicCell {
 public:
   int hunger = 0;
-  const int hungerThreshold = 10;
+  const int hungerThreshold = 5;
 
   HungerCell() = default;
 

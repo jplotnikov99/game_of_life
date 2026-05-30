@@ -56,7 +56,7 @@ std::unique_ptr<BasicCell> &Grid::getCellPtr(int x, int y) {
 void Grid::randomize() {
   for (int i = 0; i < rows; ++i) {
     for (int j = 0; j < cols; ++j) {
-      int cell = rollDN(5); // Randomly get 0 or 1
+      int cell = rollDN(9); // Randomly get 0 or 1
       switch (cell) {
       case 0:
         cells[i][j] = std::make_unique<BasicCell>(true); // Alive
