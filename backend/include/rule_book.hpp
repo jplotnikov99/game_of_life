@@ -40,4 +40,7 @@ public:
   CellType getDominantCellType() const;
 
   void loadCellState();
+
+  void applyEatenRules(std::unique_ptr<BasicCell> &currentCell,
+                       std::unique_ptr<BasicCell> &nextCell);
 };

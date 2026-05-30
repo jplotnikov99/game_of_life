@@ -15,6 +15,7 @@ void RuleBook::applyRules(Grid &grid) {
       // Apply the Game of Life rules
       std::unique_ptr<BasicCell> &currentCell = newGrid.getCellPtr(x, y);
       std::unique_ptr<BasicCell> &nextCell = grid.getCellPtr(x, y);
+
       if (currentCell->alive)
         switch (currentCell->getType()) {
         case CellType::BASIC:
@@ -34,15 +35,17 @@ void RuleBook::applyRules(Grid &grid) {
       }
     }
   }
+  for (x = 0; x < grid.getrows(); ++x) {
+    for (y = 0; y < grid.getcols(); ++y) {
+      std::unique_ptr<BasicCell> &currentCell = newGrid.getCellPtr(x, y);
+      std::unique_ptr<BasicCell> &nextCell = grid.getCellPtr(x, y);
+      applyEatenRules(currentCell, nextCell);
+    }
+  }
 }
 
 void RuleBook::basicRule(std::unique_ptr<BasicCell> &currentCell,
                          std::unique_ptr<BasicCell> &nextCell) {
-  if (currentCell->eaten) {
-    nextCell->alive = false;
-    nextCell->eaten = false;
-    return;
-  }
   if (neighborCount[2] > 0) {
     for (auto &neighbor : neighbors) {
       if ((*neighbor)->alive && (*neighbor)->eaten == false &&
@@ -52,8 +55,7 @@ void RuleBook::basicRule(std::unique_ptr<BasicCell> &currentCell,
       }
     }
   }
-  nextCell->alive =
-      (neighborCount[0] == 2 || neighborCount[0] == 3);
+  nextCell->alive = (neighborCount[0] == 2 || neighborCount[0] == 3);
 }
 
 void RuleBook::hungerRule(std::unique_ptr<BasicCell> &currentCell,
@@ -68,24 +70,17 @@ void RuleBook::hungerRule(std::unique_ptr<BasicCell> &currentCell,
         break;                     // Only eat one neighbor per turn
       }
     }
-    current->hunger = -1;
+    current->hunger = -5;
   } else {
-    nextCell->alive = (((aliveNeighbors == 2 || aliveNeighbors == 3) &&
-                        current->hunger < current->hungerThreshold) ||
-                       current->hunger < 0);
+    nextCell->alive = ((aliveNeighbors == 2 || aliveNeighbors == 3) &&
+                       current->hunger < current->hungerThreshold) ||
+                      current->hunger < 0;
   }
   next->hunger = current->hunger + 1;
 }
 
 void RuleBook::vegitationRule(std::unique_ptr<BasicCell> &currentCell,
                               std::unique_ptr<BasicCell> &nextCell) {
-  if (currentCell->eaten) {
-    VegitationCell *next = dynamic_cast<VegitationCell *>(nextCell.get());
-    nextCell->alive = false;
-    nextCell->eaten = false;
-    next->growth = 0;
-    return;
-  }
   nextCell->alive = (neighborCount[2] < 5);
 }
 
@@ -150,4 +145,19 @@ CellType RuleBook::getDominantCellType() const {
 void RuleBook::loadCellState() {
   loadNeighbors();
   dominantType = getDominantCellType();
+}
+
+void RuleBook::applyEatenRules(std::unique_ptr<BasicCell> &currentCell,
+                               std::unique_ptr<BasicCell> &nextCell) {
+  if (currentCell->eaten) {
+    nextCell->alive = false;
+    nextCell->eaten = false;
+  }
+  else{
+    return;
+  }
+  if (currentCell->getType() == CellType::VEGITATION) {
+    VegitationCell *next = dynamic_cast<VegitationCell *>(nextCell.get());
+    next->growth = 0;
+  }
 }

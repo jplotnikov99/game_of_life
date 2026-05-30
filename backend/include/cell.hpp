@@ -39,7 +39,7 @@ public:
 class VegitationCell : public BasicCell {
 public:
   int growth = 0;
-  const int growthThreshold = 3;
+  const int growthThreshold = 4;
 
   VegitationCell() = default;
   VegitationCell(const bool alive, const int growth)
