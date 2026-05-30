@@ -6,6 +6,8 @@ std::unique_ptr<BasicCell> createCell(CellType type, bool alive) {
     return std::make_unique<BasicCell>(alive);
   case CellType::HUNGER:
     return std::make_unique<HungerCell>(alive);
+  case CellType::VEGITATION:
+    return std::make_unique<VegitationCell>(alive);
   default:
     return std::make_unique<BasicCell>(alive); // Default to BASIC
   }

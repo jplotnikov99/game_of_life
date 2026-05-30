@@ -1,7 +1,6 @@
 #include <memory>
 
-enum CellType { BASIC = 0, HUNGER = 1 };
-
+enum CellType { BASIC = 0, HUNGER = 1, VEGITATION = 2 };
 
 class BasicCell {
 public:
@@ -9,7 +8,6 @@ public:
   bool killed = false;
 
   BasicCell() = default;
-
   BasicCell(const bool alive) : alive(alive) {}
 
   virtual CellType getType() const { return CellType::BASIC; }
@@ -27,7 +25,6 @@ public:
   const int hungerThreshold = 5;
 
   HungerCell() = default;
-
   HungerCell(const bool alive) : BasicCell(alive) {}
 
   CellType getType() const override { return CellType::HUNGER; }
@@ -39,4 +36,16 @@ public:
   ~HungerCell() = default;
 };
 
-std::unique_ptr<BasicCell> createCell(CellType type, bool alive = true); 
+class VegitationCell : public BasicCell {
+public:
+  VegitationCell() = default;
+  VegitationCell(const bool alive) : BasicCell(alive) {}
+
+  CellType getType() const override { return CellType::VEGITATION; }
+
+  std::unique_ptr<BasicCell> clone() const override {
+    return std::make_unique<VegitationCell>(*this);
+  }
+};
+
+std::unique_ptr<BasicCell> createCell(CellType type, bool alive = true);

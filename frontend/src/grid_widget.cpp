@@ -24,6 +24,8 @@ QColor GridWidget::cellTypeToColor(BasicCell &cell) const {
     return Qt::gray;
   case CellType::HUNGER:
     return Qt::darkRed;
+  case CellType::VEGITATION:
+    return Qt::darkGreen;
   default:
     return Qt::gray; // Default color for unknown types
   }
@@ -65,6 +67,9 @@ void GridWidget::setCellTypeAt(int row, int col) {
     break;
   case CellType::HUNGER:
     m_grid.setCell(row, col, std::make_unique<HungerCell>(true));
+    break;
+  case CellType::VEGITATION:
+    m_grid.setCell(row, col, std::make_unique<VegitationCell>(true));
     break;
   }
 }

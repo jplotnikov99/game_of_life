@@ -22,6 +22,8 @@ public:
   void randomizeGrid();
   void loadStyles();
   void loadNames();
+  void makeLayers();
+  void connectSignals();
 
 private:
   QPushButton *nextStateButton;
@@ -31,6 +33,7 @@ private:
   QSlider *speedSlider;
   QPushButton *basicLabel;
   QPushButton *hungerLabel;
+  QPushButton *vegitationLabel;
   GridWidget *gridWidget;
   Communicator *communicator;
 };
