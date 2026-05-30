@@ -21,9 +21,9 @@ void GridWidget::resetGrid() {
 QColor GridWidget::cellTypeToColor(BasicCell &cell) const {
   switch (cell.getType()) {
   case CellType::BASIC:
-    return Qt::black;
+    return Qt::gray;
   case CellType::HUNGER:
-    return Qt::red;
+    return Qt::darkRed;
   default:
     return Qt::gray; // Default color for unknown types
   }
@@ -37,7 +37,7 @@ void GridWidget::paintEvent(QPaintEvent *) {
       QRect cell(c * m_cellSize, r * m_cellSize, m_cellSize, m_cellSize);
       painter.fillRect(cell, m_grid.getCell(r, c).alive
                                  ? cellTypeToColor(m_grid.getCell(r, c))
-                                 : Qt::white);
+                                 : Qt::black);
     }
 }
 

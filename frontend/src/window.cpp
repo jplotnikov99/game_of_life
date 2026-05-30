@@ -76,8 +76,18 @@ void MainWindow::loadNames() {
 }
 
 void MainWindow::loadStyles() {
+  // window style
+  setStyleSheet("background-color: #222; color: white; font-family: Arial;");
+
   // playPauseButton style
   playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+  playPauseButton->setStyleSheet("background-color: #444; color: white;");
+
+  // nextStateButton, resetButton, randomizeButton styles
+  QString buttonStyle = "background-color: #444; color: white; padding: 5px 10px;";
+  nextStateButton->setStyleSheet(buttonStyle);
+  resetButton->setStyleSheet(buttonStyle);
+  randomizeButton->setStyleSheet(buttonStyle);
 
   // speedSlider style
   speedSlider->setRange(10, 500);
@@ -86,7 +96,7 @@ void MainWindow::loadStyles() {
   speedSlider->setFixedWidth(250);
 
   // cell type labels
-  basicLabel->setStyleSheet("background-color: black; color: white;");
+  basicLabel->setStyleSheet("background-color: gray; color: black;");
 
-  hungerLabel->setStyleSheet("background-color: red; color: white;");
+  hungerLabel->setStyleSheet("background-color: #800000; color: black;");
 }
